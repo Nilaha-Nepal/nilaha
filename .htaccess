@@ -8,3 +8,13 @@ Options -Indexes
   Header set Cache-Control "no-cache"
  </Files>
 </IfModule>
+
+# Existing generated pages and calculator files are served directly.
+# New published database profiles/articles may use the React fallback.
+<IfModule mod_rewrite.c>
+ RewriteEngine On
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_URI} !^/api(?:/|$)
+ RewriteRule ^ index.html [L]
+</IfModule>
