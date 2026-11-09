@@ -6,3 +6,4 @@
 .vercel-old/
 node_modules/
 *.log
+dist/

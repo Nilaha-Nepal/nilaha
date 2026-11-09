@@ -1,53 +1,61 @@
 # Nilaha
 
-A mobile-first support-access prototype with an everyday calculator interface. The interface uses one mobile layout, capped at 600px, with matching dark support and counselling pages.
+A responsive React website helping women in Nepal explore information and support. Open source under the existing MIT licence.
 
-## Prototype status
+## Included
 
-This is a demonstration, not a live support or emergency service. Requests are **not sent, saved, or monitored**. Counselling entries are illustrative and are not verified providers. Use fictional details only.
+- Public homepage, Get help, counselling directory and profiles, searchable articles, Support someone, About and Privacy pages.
+- Working site search, counsellor filters, article filters, mobile navigation and a quick-exit control.
+- National Women Commission 1145 and Nepal Police 100 contacts with official source links, checked 9 November 2026. These are independent services, not Nilaha partners.
+- A separate dark calculator prototype at `/#/calculator` or `/calculator/index.html`. Keyboard key → 2580 (requests) or 1379 (counselling) → equals.
+- React frontend, optional Supabase public content, Node.js/Express intake API and a database schema with row-level security.
 
-The four-digit demo codes are hard-coded and visible in the source. They demonstrate navigation only, not authentication or confidentiality. Client-side attempt limiting resets on reload. Do not use this version for survivor information.
+## Current limits
 
-## Run locally
+Counsellor profiles are illustrative, not real practitioners. Articles are editorial previews requiring local professional review. No partnerships, verified counsellors or live availability are claimed. There is no team dashboard, live chat, appointment booking, SMS delivery or authentication UI. Database records can be managed by authorized operators through Supabase's dashboard.
 
-Requires Python 3; there is no build step or JavaScript dependency installation.
+Intake defaults to **disabled**. In this mode the form is a demonstration: nothing is transmitted or stored and the result explicitly says no request was sent. Do not enter real case information in the preview.
+
+The calculator's hard-coded public PINs are navigation demonstrations, not authentication. Quick exit does not erase history or defeat monitoring software. Only the calculator shell has offline support; no support request is stored offline.
+
+## Develop and build
+
+Use Node.js 22 LTS or later.
 
 ```sh
-python3 -m http.server 4173
+npm ci
+npm run dev
+npm run build
+npm test
 ```
 
-Open http://localhost:4173.
+Vite serves the public website in development (normally http://localhost:5173). `npm run preview` previews the production frontend. `npm start` serves the built frontend and API on port 3000, or the host-provided PORT.
 
-## Try the demo
+For local full-stack development, run `npm start` after building in another terminal; Vite proxies `/api` to port 3000. Environment variables must be set in the Node process (or launch with Node's `--env-file` option). Vite loads local `.env` files at build time.
 
-1. Use the calculator for basic arithmetic, decimals, percentages, sign changes and backspace.
-2. Tap the keyboard key to switch to PIN entry.
-3. Enter `2580`, then `=` to open the support request form.
-4. Enter `1379`, then `=` to open the counselling directory.
-5. Use Back to calculator or Escape to exit. Switching tabs also resets to the calculator.
+## Supabase setup
 
-Requests allow selection of phone, SMS or WhatsApp and a safe contact time. No team dashboard or in-app reply system is included.
+1. Create a Supabase project and run `supabase/schema.sql` once in its SQL editor.
+2. Use `.env.example` as the variable reference. The URL and anon key are browser-safe and are supplied at build time through `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+3. Add real counsellors and reviewed articles to the tables, setting `published=true` only for approved content. The sample directory is used only when Supabase is absent or unreachable; a connected empty directory shows no professionals.
+4. Optional: run `node scripts/seed-public.mjs` to generate SQL for the current public article drafts and official helplines, then review it before running in Supabase. It does not publish counsellors or contain requests.
+5. Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` only on the server. Never expose a service-role key in VITE variables, files uploaded as static assets, or Git.
+6. Before enabling intake, establish staffing, response expectations, restricted operator access, retention/deletion policies and safeguarding procedures. Configure `APP_ORIGIN` to the exact HTTPS origin, then explicitly set `ENABLE_INTAKE=true` and restart.
 
-## Hostinger deployment
+Requests are validated and inserted by the server only. Anonymous and ordinary authenticated Supabase users cannot read or write requests. Basic per-process rate limiting is included; production needs shared rate limits and abuse protection. The server saves requests but does not notify staff or send SMS/WhatsApp. The team must monitor the restricted database and follow up externally using the user's consented channel.
 
-1. Add the new domain to your hosting plan and connect its DNS using the values provided in Hostinger.
-2. Upload these six public files to that website's document root (usually `public_html`):
-   - `index.html`
-   - `style.css`
-   - `app.js`
-   - `sw.js`
-   - `manifest.webmanifest`
-   - `icon.svg`
-3. Enable HTTPS and test the site on mobile.
+## Hostinger
 
-No Node.js server, database or build command is required. Do not upload local environment files, Git metadata or Vercel account configuration. `vercel.json` is optional configuration for Vercel and is not used by Hostinger.
+### Node.js hosting (frontend and API)
 
-The service worker caches public application assets only. External fonts have local fallbacks. Home-screen installation and offline behavior require device testing; the manifest currently supplies an SVG icon only.
+Import this repository, select Node 22 LTS or newer, install with `npm ci`, build with `npm run build` and start with `npm start` (entry point `server/index.js` if requested). The server serves `dist` and uses the host-provided PORT. Configure environment variables in the hosting panel. No domain is hard-coded.
 
-## Before a real pilot
+### Static web hosting (frontend preview only)
 
-Implement user-selected credentials, server-enforced authentication and throttling, secure request delivery, provider verification, consent and retention rules, and safeguarding review. Discreet appearance does not guarantee that app use is undetectable on a shared or monitored device.
+Run `npm run build` and upload the **contents of `dist/`** to the new domain's document root, typically `public_html`. Include `.htaccess` and the calculator subfolder. Never upload the repository itself, server code, `.env` or service credentials to a public document root. Static hosting does not run the intake API: requests remain disabled unless an API is separately provided.
 
-## Open source and privacy
+The Vercel configuration builds a static preview; the Express API requires Node hosting. Routes use URL hashes so normal page links work without server rewrites.
 
-Licensed under the MIT licence in [LICENSE](LICENSE). The licence covers the software; personal information, access credentials and case records must never be committed to this repository.
+## Design and assets
+
+Original Nilaha layouts and graphics, inspired by support-first information architecture rather than Refuge branding or copied content. Hero photo is illustrative stock imagery from Unsplash (photo-1517841905240-472988babdf9), not a client or partner. Typography uses Google Fonts with system fallbacks. No analytics or advertising scripts are included, but hosts may maintain access logs.

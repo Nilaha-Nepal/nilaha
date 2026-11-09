@@ -1,0 +1,10 @@
+Options -Indexes
+<IfModule mod_headers.c>
+ Header set X-Content-Type-Options "nosniff"
+ Header set Referrer-Policy "no-referrer"
+ Header set X-Frame-Options "SAMEORIGIN"
+ Header set X-Robots-Tag "noindex, nofollow"
+ <Files "sw.js">
+  Header set Cache-Control "no-cache"
+ </Files>
+</IfModule>
