@@ -3,7 +3,7 @@ import {spawnSync} from 'node:child_process';
 import {mkdtempSync,rmSync,existsSync,readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-const branch='hostinger-static';
+const branch='webapp';
 function git(args,options={}){const r=spawnSync('git',args,{encoding:'utf8',...options});if(r.status!==0)throw new Error(r.stderr||'Git command failed');return r.stdout.trim();}
 const root=git(['rev-parse','--show-toplevel']),dist=path.join(root,'dist');
 for(const name of ['index.html','assets','calculator/index.html'])if(!existsSync(path.join(dist,name)))throw new Error('Missing build output: '+name+'. Run npm run build first.');

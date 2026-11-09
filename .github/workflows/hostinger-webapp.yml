@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: hostinger-static
+  group: webapp
   cancel-in-progress: false
 jobs:
   build:

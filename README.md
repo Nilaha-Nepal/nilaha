@@ -62,9 +62,9 @@ Original Nilaha layouts and graphics, inspired by support-first information arch
 
 ### Hostinger Git deployment without a Node build
 
-The `hostinger-static` branch contains the compiled public website at its root, including `/calculator/`. For the Git deployment screen that only clones files and installs Composer dependencies, choose **branch `hostinger-static`** and retain `public_html` as the destination. Do not point that setup at `main`, which contains React source files.
+The `webapp` branch contains the compiled public website at its root, including `/calculator/`. For the Git deployment screen that only clones files and installs Composer dependencies, choose **branch `webapp`** and retain `public_html` as the destination. Do not point that setup at `main`, which contains React source files.
 
-GitHub Actions builds and tests pushes to `main`, then updates `hostinger-static`. If Hostinger auto-deployment is disabled, redeploy that branch in hPanel after the workflow completes. Static deployment keeps intake disabled; server-backed support requests still require the separately configured Node service.
+GitHub Actions builds and tests pushes to `main`, then updates `webapp`. If Hostinger auto-deployment is disabled, redeploy that branch in hPanel after the workflow completes. Static deployment keeps intake disabled; server-backed support requests still require the separately configured Node service.
 
 To publish the static branch manually from a trusted source checkout:
 
