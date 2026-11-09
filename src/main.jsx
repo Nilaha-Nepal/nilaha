@@ -5,6 +5,7 @@ import {helplines as initialHelplines,counsellors as samples,articles as initial
 import {publicData,intakeStatus,sendRequest} from './api';
 import './styles.css';
 import {usePageMotion} from './motion';
+import {installPageTransitions} from './transitions';
 export const parseRoute=()=>typeof location==='undefined'?'/':(location.pathname.replace(/\/+$/, '')||'/');
 export const pageUrl=to=>to==='/'?'/':to.replace(/\/+$/, '')+'/';
 function Link({to='/',children,className='',...props}){return <a href={pageUrl(to)} className={className} {...props}>{children}</a>}
@@ -59,5 +60,6 @@ if(typeof document!=='undefined'){
   if('serviceWorker' in navigator)navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>{if(new URL(r.scope).pathname==='/')r.unregister()}));
   const root=document.getElementById('root');
   if(root.dataset.route===parseRoute())hydrateRoot(root,<App/>);else createRoot(root).render(<App/>);
+  installPageTransitions();
  }
 }

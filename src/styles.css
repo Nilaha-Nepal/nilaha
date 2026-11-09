@@ -108,3 +108,12 @@ html{scroll-padding-top:125px}
  .hub-task.neutral .task-icon{background:#f0e9f6;border-color:#e3d7ec}
  html{scroll-padding-top:100px}
 }
+
+/* Brief curved curtain between normal document navigations. */
+#page-transition{display:flex;align-items:center;justify-content:center;gap:15px;will-change:transform;font-family:Manrope,sans-serif;font-size:clamp(23px,4vw,43px);font-weight:500;letter-spacing:-1px}
+#page-transition:before,#page-transition:after{content:'';position:absolute;background:#19171b;left:-25%;width:150%;height:160px;border-radius:50%;z-index:-1}
+#page-transition:before{top:-80px}#page-transition:after{bottom:-80px}
+#page-transition [data-transition-label]{position:relative;max-width:min(700px,80vw);text-align:center;line-height:1.3}
+.transition-dot{width:8px;height:8px;border-radius:50%;background:#cfb4e2;flex-shrink:0}
+.quick-exit:focus-visible{position:relative;z-index:1000}
+@media(max-width:600px){#page-transition:before,#page-transition:after{height:100px}#page-transition:before{top:-50px}#page-transition:after{bottom:-50px}}
