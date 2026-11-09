@@ -1,4 +1,5 @@
 export const helplines = [
+ {id:'child',name:'Child Helpline',number:'1098',type:'Children & families',hours:'24 hours, every day (Ncell listing)',cost:'Free call in Nepal',description:'A child-focused helpline listed in Nepal’s emergency service directory. Ask the service about local coverage and available support.',source:'https://www.ncell.com.np/en/individual/emergency-services-information',checked:'9 November 2026'},
  {id:'nwc',name:'National Women Commission',number:'1145',type:'Women’s support',hours:'24 hours, every day',cost:'Toll-free in Nepal',description:'Support and referrals for people affected by gender-based violence.',source:'https://www.nwchelpline.gov.np/report-gbv?lang=en',checked:'9 November 2026'},
  {id:'police',name:'Nepal Police',number:'100',type:'Emergency',hours:'Emergency contact',cost:'Free call in Nepal',description:'Police assistance in an emergency.',source:'https://www.nepalpolice.gov.np/',checked:'9 November 2026'}
 ];

@@ -4,7 +4,7 @@ A responsive React website helping women in Nepal explore information and suppor
 
 ## Included
 
-- Public homepage, Get help, counselling directory and profiles, searchable articles, Support someone, About and Privacy pages.
+- Utility support hub, dedicated helplines, support requests, children & families, Get help, counselling directory and profiles, searchable articles, Support someone, About and Privacy pages.
 - Working site search, counsellor filters, article filters, mobile navigation and a quick-exit control.
 - National Women Commission 1145 and Nepal Police 100 contacts with official source links, checked 9 November 2026. These are independent services, not Nilaha partners.
 - A separate dark calculator prototype at `/#/calculator` or `/calculator/index.html`. Keyboard key → 2580 (requests) or 1379 (counselling) → equals.
@@ -54,11 +54,11 @@ Import this repository, select Node 22 LTS or newer, install with `npm ci`, buil
 
 Run `npm run build` and upload the **contents of `dist/`** to the new domain's document root, typically `public_html`. Include `.htaccess` and the calculator subfolder. Never upload the repository itself, server code, `.env` or service credentials to a public document root. Static hosting does not run the intake API: requests remain disabled unless an API is separately provided.
 
-The Vercel configuration builds a static preview; the Express API requires Node hosting. Routes use URL hashes so normal page links work without server rewrites.
+The Vercel configuration builds a static preview; the Express API requires Node hosting. The build generates separate HTML documents at real page URLs, including `/helplines/`, `/request-support/`, `/counsellors/`, `/articles/` and each article/profile. Normal navigation loads those documents. Legacy `/#/...` links redirect to the new URLs. The included `.htaccess` provides a fallback for future database-generated URLs.
 
 ## Design and assets
 
-Original Nilaha layouts and graphics, inspired by support-first information architecture rather than Refuge branding or copied content. Hero photo is illustrative stock imagery from Unsplash (photo-1517841905240-472988babdf9), not a client or partner. Typography uses Google Fonts with system fallbacks. No analytics or advertising scripts are included, but hosts may maintain access logs.
+Original Nilaha layouts and graphics, inspired by support-first information architecture rather than Refuge branding or copied content. The support hub uses icons and compact service panels rather than stock-photo marketing sections. Typography uses Google Fonts with system fallbacks. No analytics or advertising scripts are included, but hosts may maintain access logs.
 
 ### Hostinger Git deployment without a Node build
 
@@ -72,3 +72,8 @@ To publish the static branch manually from a trusted source checkout:
 npm run build
 node scripts/publish-static.mjs --push
 ```
+
+
+## Utility navigation and motion
+
+The public homepage is a service hub rather than a promotional landing page: direct actions, working official helpline links, search and practical resources. Desktop navigation uses a sidebar; mobile uses a compact horizontal service menu. Individual pages are pre-rendered at build time and hydrated for interactive filters and forms. GSAP/ScrollTrigger provides subtle one-time fade-up reveals, loaded only when browser capabilities are available and reduced motion is not requested. In-page links use native smooth scrolling, with an instant-scroll reduced-motion alternative. There is no custom scroll hijacking. Calculator files remain separate at `/calculator/`.
