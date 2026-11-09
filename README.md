@@ -59,3 +59,16 @@ The Vercel configuration builds a static preview; the Express API requires Node 
 ## Design and assets
 
 Original Nilaha layouts and graphics, inspired by support-first information architecture rather than Refuge branding or copied content. Hero photo is illustrative stock imagery from Unsplash (photo-1517841905240-472988babdf9), not a client or partner. Typography uses Google Fonts with system fallbacks. No analytics or advertising scripts are included, but hosts may maintain access logs.
+
+### Hostinger Git deployment without a Node build
+
+The `hostinger-static` branch contains the compiled public website at its root, including `/calculator/`. For the Git deployment screen that only clones files and installs Composer dependencies, choose **branch `hostinger-static`** and retain `public_html` as the destination. Do not point that setup at `main`, which contains React source files.
+
+GitHub Actions builds and tests pushes to `main`, then updates `hostinger-static`. If Hostinger auto-deployment is disabled, redeploy that branch in hPanel after the workflow completes. Static deployment keeps intake disabled; server-backed support requests still require the separately configured Node service.
+
+To publish the static branch manually from a trusted source checkout:
+
+```sh
+npm run build
+node scripts/publish-static.mjs --push
+```
