@@ -14,7 +14,9 @@ for(const file of paths){
  for(const a of d.querySelectorAll('a[href^="/"]')){const target=a.getAttribute('href').split('#')[0];assert.ok(existsSync('dist'+target+'index.html')||existsSync('dist'+target),'Missing linked page '+target+' in '+file)}
  for(const el of d.querySelectorAll('[src^="/assets/"],[href^="/assets/"]'))assert.ok(existsSync('dist'+(el.getAttribute('src')||el.getAttribute('href'))),'Missing built asset');
  dom.window.scrollTo=()=>{};dom.window.fetch=async()=>({ok:true,json:async()=>({intakeEnabled:false})});dom.window.console.error=(...args)=>errors.push(file+': '+args.join(' '));
- dom.window.eval(js.outputFiles[0].text);await new Promise(resolve=>setTimeout(resolve,30));
+ dom.window.eval(js.outputFiles[0].text);d.querySelector('button[aria-label="Search website"]').click();
+ const deadline=Date.now()+3000;while(!d.querySelector('.search-panel')&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,10));
+ assert.ok(d.querySelector('.search-panel'),'Hydrated search control did not respond in '+file);
  assert.ok(d.querySelector('h1'),'Page lost content during hydration: '+file);
  dom.window.close();
 }
