@@ -352,14 +352,6 @@ html{scroll-padding-top:125px}
 .workspace.homepage,.homepage main .hub { width:100%; max-width:none; }
 .homepage .welcome { padding-inline: max(var(--page-gutter),calc((100% - 1160px)/2)); }
 .homepage .hub>.home-contact { width:var(--page-width); max-width:none; }
-.home-contact .request-panel {
-  position:relative; isolation:isolate; padding-inline:0; border:0; background:transparent;
-}
-.home-contact .request-panel::before {
-  content:""; position:absolute; z-index:-1; inset:0 calc(-1 * var(--page-gutter) / 2);
-  border:1px solid #ecdae4; border-radius:24px;
-  background:linear-gradient(115deg,#ffede5,#f4e9f3 44%,#fff9f8 77%);
-}
 @media(max-width:700px) {
   .homepage .welcome .situation-intro {
     margin-inline:calc(-1 * var(--page-gutter)); padding-left:var(--page-gutter);
