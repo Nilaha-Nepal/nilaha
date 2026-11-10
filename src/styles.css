@@ -291,3 +291,13 @@ html{scroll-padding-top:125px}
 .flow-row[data-tone="ochre"] { --icon-ink:#895810; --icon-tint:#fff0cc; }
 .flow-row[data-tone="plum"] { --icon-ink:#783d83; --icon-tint:#f3e7f3; }
 .flow-row[data-tone]>svg:first-child { color:var(--icon-ink); background:var(--icon-tint); }
+
+.situation-panel { overflow-x:clip; }
+.situation-detail h2 { font-size:clamp(23px,3vw,32px); }
+.situation-back { display:inline-flex; align-items:center; gap:6px; min-height:44px; margin:5px 0 10px; border:0; background:transparent; color:var(--purple); }
+@media(prefers-reduced-motion:no-preference) {
+  .situation-detail { animation:situation-forward .32s ease-out both; }
+  .situation-return { animation:situation-backward .26s ease-out both; }
+  @keyframes situation-forward { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+  @keyframes situation-backward { from { transform:translateX(-100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+}

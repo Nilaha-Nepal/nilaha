@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, ClipboardCheck, HeartHandshake, House, MapPin, MessageCircle, Phone, Shield, TriangleAlert, Users, CircleHelp, Download} from 'lucide-react';
 
 const situations = [
@@ -22,16 +22,29 @@ function JourneyFrame({title, description, children, step, back, embedded=false}
 
 export function SituationNavigator({embedded=false}) {
   const [choice,setChoice]=useState(null);
-  if(choice!==null) {
-    const [, ,title,description,url,action]=situations[choice];
-    return <JourneyFrame embedded={embedded} title={title} description={description} step={1} back={()=>setChoice(null)}>
-      <img className="flow-picture" src="/art/welcome.jpg" alt=""/>
-      <a className="flow-row" href="/articles/finding-support/"><BookOpen/>Finding support, one step at a time<ChevronRight/></a>
-      <a className="button flow-action" href={url}>{action}<ArrowRight/></a>
-    </JourneyFrame>;
-  }
-  return <JourneyFrame embedded={embedded} title="What would you like help with today?" description="Choose the option that feels closest to your situation. You can explore anonymously." step={0}>
-    {situations.map(([Icon,label,,,,,color],i)=><button key={label} className="flow-row" data-tone={color} onClick={()=>setChoice(i)}><Icon/>{label}<ChevronRight/></button>)}
+  const lastChoice = useRef(null);
+  const panel = useRef(null);
+  useEffect(() => {
+    if (lastChoice.current === null) return;
+    const target = choice === null
+      ? panel.current.querySelectorAll('button.flow-row')[lastChoice.current]
+      : panel.current.querySelector('h2');
+    target?.focus({preventScroll:true});
+  }, [choice]);
+  const selected = situations[choice];
+  return <JourneyFrame embedded={embedded} title="What would you like help with today?" description="Choose the option that feels closest to your situation. You can explore anonymously." step={selected ? 1 : 0}>
+    <div className="situation-panel" ref={panel}>
+      {selected ? <div key="detail" className="situation-detail">
+        <button className="situation-back" onClick={()=>setChoice(null)}><ChevronLeft size={18}/>Back to situations</button>
+        <h2 tabIndex={-1}>{selected[2]}</h2>
+        <p>{selected[3]}</p>
+        {!embedded && <img className="flow-picture" src="/art/welcome.jpg" alt=""/>}
+        <a className="flow-row" href="/articles/finding-support/"><BookOpen/>Finding support, one step at a time<ChevronRight/></a>
+        <a className="button flow-action" href={selected[4]}>{selected[5]}<ArrowRight/></a>
+      </div> : <div key="choices" className={lastChoice.current === null ? undefined : 'situation-return'}>
+        {situations.map(([Icon,label,,,,,color],i)=><button key={label} className="flow-row" data-tone={color} onClick={()=>{lastChoice.current=i;setChoice(i)}}><Icon/>{label}<ChevronRight/></button>)}
+      </div>}
+    </div>
   </JourneyFrame>;
 }
 
