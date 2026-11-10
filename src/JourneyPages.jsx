@@ -1,12 +1,41 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, ClipboardCheck, HeartHandshake, House, MapPin, MessageCircle, Phone, Shield, TriangleAlert, Users, CircleHelp, Download} from 'lucide-react';
 
+const talk = {label:'Talk to someone', href:'/request-support/', icon:MessageCircle};
+const message = {label:'Send us a message', href:'/request-support/', icon:MessageCircle};
+const helpline = {label:'Call 1145', href:'tel:1145', icon:Phone};
+
 const situations = [
-  [TriangleAlert, 'Someone is controlling or threatening me', 'If someone is controlling or threatening you', 'If someone checks your messages without permission, decides who you can see, or threatens you when you disagree, it can be a sign of controlling behavior. You might find yourself changing everyday plans because you’re worried about their reaction.', 'https://nepal.unfpa.org/en/16-days-16-faces', 'Read other stories', 'coral', 'You can talk about one thing that happened, even if you’re still figuring out how you feel about it. You choose what to share.'],
-  [House, 'I feel unsafe at home or at work', 'If you feel unsafe at home or at work', 'At home, someone might block the doorway during an argument or make you afraid to say no. At work, unwanted touching, repeated comments, or threats about your shifts can leave you feeling unsafe.', '/helplines/', 'Find support', 'teal', 'If you want support now, you can choose a helpline to call. If you’d prefer a conversation later, tell us how and when it feels safe to reach you.'],
-  [Users, 'I’m worried about someone else', 'Support someone you care about.', 'Explore ways to listen and share options with someone you trust.', '/support-someone/', 'Explore the guide', 'indigo'],
-  [MessageCircle, 'I need someone to talk to', 'Prepare for a conversation.', 'Explore questions you can ask before speaking with a counsellor.', '/articles/first-conversation/', 'Read the guide', 'ochre'],
-  [CircleHelp, 'I’m not sure what’s happening', 'You can start with a question.', 'Browse short guides about getting support, counselling and digital privacy.', '/articles/', 'Learn & recognize', 'plum'],
+  {
+    icon:TriangleAlert, tone:'coral', label:"Someone is controlling or threatening me",
+    title:"If someone is controlling or threatening you",
+    paragraphs:["If someone checks your messages without permission, decides who you can see, or threatens you when you disagree, it can be a sign of controlling behavior. You might find yourself changing everyday plans because you’re worried about their reaction.", "You can talk about one thing that happened, even if you’re still figuring out how you feel about it. You choose what to share."],
+    actions:[{label:"Read other stories", href:"https://nepal.unfpa.org/en/16-days-16-faces", icon:ArrowRight}, talk]
+  },
+  {
+    icon:House, tone:'teal', label:"I feel unsafe at home or at work",
+    title:"If you feel unsafe at home or at work",
+    paragraphs:["At home, someone might block the doorway during an argument or make you afraid to say no. At work, unwanted touching, repeated comments, or threats about your shifts can leave you feeling unsafe.", "If you want support now, you can choose a helpline to call. If you’d prefer a conversation later, tell us how and when it feels safe to reach you."],
+    actions:[{label:"Find support", href:"/helplines/", icon:ArrowRight}, talk]
+  },
+  {
+    icon:Users, tone:'indigo', label:"I’m worried about someone else",
+    title:"Support someone you care about",
+    paragraphs:["If someone you care about seems worried or withdrawn, you can start by asking how they’re doing and giving them time to answer. If you’d like help thinking through what to say, tell us a little about your concern. You can leave out their name."],
+    actions:[message]
+  },
+  {
+    icon:MessageCircle, tone:'ochre', label:"I need someone to talk to",
+    title:"If you’re looking for someone to talk to",
+    paragraphs:["We’re here to help you find someone who will listen. Explore counselling options, chat with a volunteer listener on 7 Cups, or call Nepal’s National Women Commission helpline for support with gender-based violence."],
+    actions:[{label:'Talk to a counsellor', href:'/counsellors/', icon:Users}, {label:'Anonymous peer chat · 7 Cups', href:'https://www.7cups.com/', icon:MessageCircle}, helpline]
+  },
+  {
+    icon:CircleHelp, tone:'plum', label:"I’m not sure what’s happening",
+    title:"Not sure what’s happening?",
+    paragraphs:["You can start with a question, even if you don’t know how to describe what happened. Send us a message in your own words, or call the National Women Commission helpline if you have a question about violence or threats."],
+    actions:[message, helpline]
+  },
 ];
 
 function JourneyFrame({title, description, children, step, back, embedded=false}) {
@@ -36,19 +65,16 @@ export function SituationNavigator({embedded=false}) {
     <div className="situation-panel" ref={panel}>
       {selected ? <div key="detail" className="situation-detail">
         <button className="situation-back" onClick={()=>setChoice(null)}><ChevronLeft size={18}/>Back to situations</button>
-        <h2 tabIndex={-1}>{selected[2]}</h2>
-        <p>{selected[3]}</p>
-        {selected[7] && <p>{selected[7]}</p>}
+        <h2 tabIndex={-1}>{selected.title}</h2>
+        {selected.paragraphs.map(text=><p key={text}>{text}</p>)}
         {!embedded && <img className="flow-picture" src="/art/welcome.jpg" alt=""/>}
-        {selected[7] ? <div className="situation-actions">
-          <a className="button secondary" href={selected[4]}>{selected[5]}<ArrowRight size={16}/></a>
-          <a className="button" href="/request-support/"><MessageCircle size={16}/>Talk to someone</a>
-        </div> : <>
-          <a className="flow-row" href="/articles/finding-support/"><BookOpen/>Finding support, one step at a time<ChevronRight/></a>
-          <a className="button flow-action" href={selected[4]}>{selected[5]}<ArrowRight/></a>
-        </>}
+        <div className="situation-actions">
+          {selected.actions.map(({label,href,icon:Icon},index)=>
+            <a key={href} className={'button'+(index?' secondary':'')} href={href}><Icon size={17}/>{label}</a>
+          )}
+        </div>
       </div> : <div key="choices" className={lastChoice.current === null ? undefined : 'situation-return'}>
-        {situations.map(([Icon,label,,,,,color],i)=><button key={label} className="flow-row" data-tone={color} onClick={()=>{lastChoice.current=i;setChoice(i)}}><Icon/>{label}<ChevronRight/></button>)}
+        {situations.map(({icon:Icon,label,tone},i)=><button key={label} className="flow-row" data-tone={tone} onClick={()=>{lastChoice.current=i;setChoice(i)}}><Icon/>{label}<ChevronRight/></button>)}
       </div>}
     </div>
   </JourneyFrame>;
