@@ -10,7 +10,7 @@ const situations = [
     icon:TriangleAlert, tone:'coral', label:"Someone is controlling or threatening me",
     title:"If someone is controlling or threatening you",
     paragraphs:["If someone checks your messages without permission, decides who you can see, or threatens you when you disagree, it can be a sign of controlling behavior. You might find yourself changing everyday plans because you’re worried about their reaction.", "You can talk about one thing that happened, even if you’re still figuring out how you feel about it. You choose what to share."],
-    actions:[{label:"Read other stories", href:"https://nepal.unfpa.org/en/16-days-16-faces", icon:ArrowRight}, talk]
+    actions:[{label:"Read other stories", href:"#", icon:ArrowRight}, talk]
   },
   {
     icon:House, tone:'teal', label:"I feel unsafe at home or at work",
@@ -27,8 +27,8 @@ const situations = [
   {
     icon:MessageCircle, tone:'ochre', label:"I need someone to talk to",
     title:"If you’re looking for someone to talk to",
-    paragraphs:["We’re here to help you find someone who will listen. Explore counselling options, chat with a volunteer listener on 7 Cups, or call Nepal’s National Women Commission helpline for support with gender-based violence."],
-    actions:[{label:'Talk to a counsellor', href:'/counsellors/', icon:Users}, {label:'Anonymous peer chat · 7 Cups', href:'https://www.7cups.com/', icon:MessageCircle}, helpline]
+    paragraphs:["We’re here to help you find someone who will listen. Explore counselling options or call Nepal’s National Women Commission helpline for support with gender-based violence."],
+    actions:[{label:'Talk to a counsellor', href:'/counsellors/', icon:Users}, {label:'Anonymous peer chat', href:'#', icon:MessageCircle}, helpline]
   },
   {
     icon:CircleHelp, tone:'plum', label:"I’m not sure what’s happening",
@@ -70,7 +70,8 @@ export function SituationNavigator({embedded=false}) {
         {!embedded && <img className="flow-picture" src="/art/welcome.jpg" alt=""/>}
         <div className="situation-actions">
           {selected.actions.map(({label,href,icon:Icon},index)=>
-            <a key={href} className={'button'+(index?' secondary':'')} href={href}><Icon size={17}/>{label}</a>
+            <a key={href} className={'button'+(index?' secondary':'')} href={href} aria-disabled={href === '#' || undefined}
+              onClick={href === '#' ? event => event.preventDefault() : undefined}><Icon size={17}/>{label}</a>
           )}
         </div>
       </div> : <div key="choices" className={lastChoice.current === null ? undefined : 'situation-return'}>

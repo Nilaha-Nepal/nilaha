@@ -363,3 +363,4 @@ html{scroll-padding-top:125px}
 .situation-actions .button { min-height:44px; padding:10px 16px; gap:8px; }
 
 .situation-panel :is(button,a):focus-visible { outline-offset:-3px; }
+.situation-actions a[aria-disabled=true] { background:#f2ebf1; color:#655a68; border-color:#d9cdd9; cursor:default; transform:none; }
