@@ -241,7 +241,7 @@ html{scroll-padding-top:125px}
  .header>.nav { height:60px; }
  .logo img { width:31px; }.logo>span { font-size:25px; }
  .homepage .hub> :not(.welcome) { width:calc(100% - 32px); }
- .welcome { padding:26px 20px 44px; background-image:linear-gradient(90deg,#fff4f2 35%,#fff4f2e6 74%,#fff4f29c),url('/art/welcome.jpg'); }
+ .welcome { padding:26px 20px 44px; background:#fff4f2; }
  .welcome-copy { width:100%; }
  .hub .welcome h1 { max-width:480px; font-size:clamp(32px,7.6vw,43px); }
  .desktop-title,.welcome .see-how { display:none; }.phone-title { display:inline; }
@@ -274,6 +274,14 @@ html{scroll-padding-top:125px}
 .homepage .welcome .flow-picture { display:none; }
 .homepage .welcome + .journey-choices { margin-top:24px; }
 @media(max-width:700px) {
+  .homepage .welcome { padding-top:0; }
+  .homepage .welcome::before {
+    content:"";
+    display:block;
+    height:clamp(108px,29vw,155px);
+    margin:0 -20px 18px;
+    background:url('/art/welcome.jpg') right center / cover no-repeat;
+  }
   .homepage .welcome .flow-frame { width:100%; }
 }
 .flow-row[data-tone="coral"] { --icon-ink:#a43936; --icon-tint:#ffe6df; }
