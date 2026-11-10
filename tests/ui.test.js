@@ -8,10 +8,11 @@ async function setup(){const compiled=await build({entryPoints:['src/main.jsx'],
 async function route(dom,to){const oldTitle=dom.window.document.title;dom.window.history.pushState({},'',to);dom.window.dispatchEvent(new dom.window.PopStateEvent('popstate'));await waitFor(()=>dom.window.document.title!==oldTitle);}
 test('public routes, directory filters, article filters and honest demo submission',async()=>{const dom=await setup(),d=dom.window.document;try{
 assert.equal(d.querySelector('.welcome h1').textContent,'What would you like help with today?');
-assert.equal(d.querySelectorAll('.welcome button.flow-row').length,5);assert.ok(d.querySelector('#features a[href="/calculator/"]'));
-assert.deepEqual([...d.querySelectorAll('#journeys a')].map(a=>a.getAttribute('href')),['/understand/','/plan/','/helplines/']);
+assert.equal(d.querySelectorAll('.welcome button.flow-row').length,5);assert.ok(d.querySelector(".home-contact > #request form"));
+assert.deepEqual([...d.querySelectorAll('.desktop-navigation a')].map(a=>a.getAttribute('href')),['/understand/','/plan/','/helplines/']);
 assert.equal(d.querySelectorAll('.desktop-navigation a').length,3);
-assert.equal(d.querySelectorAll('.hub-task').length,8);
+assert.deepEqual([...d.querySelectorAll('#request + .home-helplines a[href^="tel:"]')].map(a=>a.getAttribute('href')),['tel:1098','tel:1145','tel:100']);
+assert.equal(d.querySelector('.home-contact').nextElementSibling,null);
 const menu=d.querySelector('[aria-controls="mobile-navigation"]');menu.click();await waitFor(()=>!d.querySelector('#mobile-navigation').hidden);
 assert.equal(d.querySelectorAll('#mobile-navigation a').length,12);
 assert.ok(d.querySelector('#mobile-navigation a[href="/counsellors/"]'));
