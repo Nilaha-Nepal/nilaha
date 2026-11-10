@@ -14,12 +14,12 @@ export function installPageTransitions({navigate=url=>window.location.assign(url
  if(!sheet||!label)return()=>{};
  const content=document.querySelector('.workspace');
  let busy=false,failsafe;
- const reset=()=>{clearTimeout(failsafe);busy=false;gsap.killTweensOf(sheet);gsap.killTweensOf(label);if(content){gsap.killTweensOf(content);gsap.set(content,{clearProps:'transform,opacity'})}gsap.set(sheet,{yPercent:130});gsap.set(label,{opacity:0,y:0});document.documentElement.classList.remove('page-arriving');};
+ const reset=()=>{clearTimeout(failsafe);busy=false;gsap.killTweensOf(sheet);gsap.killTweensOf(label);if(content){gsap.killTweensOf(content);gsap.set(content,{clearProps:'transform,opacity'})}gsap.set(sheet,{yPercent:130});gsap.set(label,{opacity:0,y:0});document.documentElement.classList.remove('page-arriving');delete document.documentElement.dataset.transitionLabel;};
  if(document.documentElement.classList.contains('page-arriving')){
-  label.textContent=document.title.replace(/ — Nilaha$/, '');
+  label.textContent=document.documentElement.dataset.transitionLabel||document.title.replace(/ — Nilaha$/, '');
   gsap.set(sheet,{yPercent:0});gsap.set(label,{opacity:1,y:0});
-  gsap.to(label,{opacity:0,y:-12,duration:.18,ease:'power2.in'});
-  gsap.to(sheet,{yPercent:-130,duration:.56,delay:.04,ease:'power3.inOut',onComplete:reset});
+  gsap.to(label,{opacity:0,y:-12,duration:.3,delay:.45,ease:'power2.in'});
+  gsap.to(sheet,{yPercent:-130,duration:.82,delay:.45,ease:'power3.inOut',onComplete:reset});
  }
  const click=event=>{
   if(preference.matches)return;
@@ -35,9 +35,9 @@ export function installPageTransitions({navigate=url=>window.location.assign(url
   event.preventDefault();busy=true;clearTimeout(failsafe);
   label.textContent=title;
   gsap.killTweensOf(sheet);gsap.set(sheet,{yPercent:130});gsap.set(label,{opacity:0,y:18});
-  if(content)gsap.to(content,{y:-24,duration:.4,ease:'power2.inOut'});
-  gsap.to(label,{opacity:1,y:0,duration:.2,delay:.16,ease:'power2.out'});
-  gsap.to(sheet,{yPercent:0,duration:.42,ease:'power3.inOut',onComplete:()=>{navigate(url.href);failsafe=setTimeout(reset,2200)}});
+  if(content)gsap.to(content,{y:-24,duration:.6,ease:'power2.inOut'});
+  gsap.to(label,{opacity:1,y:0,duration:.3,delay:.23,ease:'power2.out'});
+  gsap.to(sheet,{yPercent:0,duration:.62,ease:'power3.inOut',onComplete:()=>{navigate(url.href);failsafe=setTimeout(reset,2200)}});
  };
  const restore=()=>{reset();try{sessionStorage.removeItem(TRANSITION_KEY)}catch{}};
  const onPageShow=event=>{if(event.persisted)restore()};
