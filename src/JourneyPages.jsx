@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, ClipboardCheck, HeartHandshake, House, MapPin, MessageCircle, Phone, Shield, TriangleAlert, Users, CircleHelp, Download} from 'lucide-react';
 
 const situations = [
-  [TriangleAlert, 'Someone is controlling or threatening me', 'It could be a sign of controlling behavior.', 'You can start by thinking about which choices you want support with.', '/plan/', 'Explore safer next steps'],
-  [House, 'I feel unsafe at home or elsewhere', 'Find someone you can speak to.', 'Explore the available services and choose how you would like to reach them.', '/helplines/', 'Find support'],
-  [Users, 'I’m worried about someone else', 'Support someone you care about.', 'Explore ways to listen and share options with someone you trust.', '/support-someone/', 'Explore the guide'],
-  [MessageCircle, 'I need someone to talk to', 'Prepare for a conversation.', 'Explore questions you can ask before speaking with a counsellor.', '/articles/first-conversation/', 'Read the guide'],
-  [CircleHelp, 'I’m not sure what’s happening', 'You can start with a question.', 'Browse short guides about getting support, counselling and digital privacy.', '/articles/', 'Learn & recognize'],
+  [TriangleAlert, 'Someone is controlling or threatening me', 'It could be a sign of controlling behavior.', 'You can start by thinking about which choices you want support with.', '/plan/', 'Explore safer next steps', 'coral'],
+  [House, 'I feel unsafe at home or elsewhere', 'Find someone you can speak to.', 'Explore the available services and choose how you would like to reach them.', '/helplines/', 'Find support', 'teal'],
+  [Users, 'I’m worried about someone else', 'Support someone you care about.', 'Explore ways to listen and share options with someone you trust.', '/support-someone/', 'Explore the guide', 'indigo'],
+  [MessageCircle, 'I need someone to talk to', 'Prepare for a conversation.', 'Explore questions you can ask before speaking with a counsellor.', '/articles/first-conversation/', 'Read the guide', 'ochre'],
+  [CircleHelp, 'I’m not sure what’s happening', 'You can start with a question.', 'Browse short guides about getting support, counselling and digital privacy.', '/articles/', 'Learn & recognize', 'plum'],
 ];
 
 function JourneyFrame({title, description, children, step, back, embedded=false}) {
@@ -28,7 +28,7 @@ export function SituationNavigator({embedded=false}) {
     </JourneyFrame>;
   }
   return <JourneyFrame embedded={embedded} title="What would you like help with today?" description="Choose the option that feels closest to your situation. You can explore anonymously." step={0}>
-    {situations.map(([Icon,label],i)=><button key={label} className="flow-row" onClick={()=>setChoice(i)}><Icon/>{label}<ChevronRight/></button>)}
+    {situations.map(([Icon,label,,,,,color],i)=><button key={label} className="flow-row" data-tone={color} onClick={()=>setChoice(i)}><Icon/>{label}<ChevronRight/></button>)}
   </JourneyFrame>;
 }
 

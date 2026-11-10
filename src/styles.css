@@ -276,3 +276,9 @@ html{scroll-padding-top:125px}
 @media(max-width:700px) {
   .homepage .welcome .flow-frame { width:100%; }
 }
+.flow-row[data-tone="coral"] { --icon-ink:#a43936; --icon-tint:#ffe6df; }
+.flow-row[data-tone="teal"] { --icon-ink:#276955; --icon-tint:#def2e9; }
+.flow-row[data-tone="indigo"] { --icon-ink:#3f598e; --icon-tint:#e5edfc; }
+.flow-row[data-tone="ochre"] { --icon-ink:#895810; --icon-tint:#fff0cc; }
+.flow-row[data-tone="plum"] { --icon-ink:#783d83; --icon-tint:#f3e7f3; }
+.flow-row[data-tone]>svg:first-child { color:var(--icon-ink); background:var(--icon-tint); }
