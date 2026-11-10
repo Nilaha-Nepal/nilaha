@@ -13,6 +13,7 @@ Options -Indexes
 # New published database profiles/articles may use the React fallback.
 <IfModule mod_rewrite.c>
  RewriteEngine On
+ RewriteRule ^api/(status|requests)/?$ api/conversation.php [END]
  RewriteCond %{REQUEST_FILENAME} !-f
  RewriteCond %{REQUEST_FILENAME} !-d
  RewriteCond %{REQUEST_URI} !^/api(?:/|$)
