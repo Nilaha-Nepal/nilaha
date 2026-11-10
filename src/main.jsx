@@ -47,7 +47,6 @@ function Home({helplines}) {
   return <div className="container hub">
     <section className="hub-heading welcome"><SituationNavigator embedded/></section>
     <div className="home-contact">
-      <RequestForm/>
       <section className="home-helplines" aria-labelledby="home-helplines-title">
         <h2 id="home-helplines-title">Helplines in Nepal</h2>
         <p>Choose a number to call an independent service.</p>
@@ -61,6 +60,7 @@ function Home({helplines}) {
         </div>
         <p className="micro">Calls may appear in your phone history. <Link to="/helplines">Service details and sources</Link></p>
       </section>
+      <RequestForm/>
     </div>
   </div>;
 }
