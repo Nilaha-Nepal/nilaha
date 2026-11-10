@@ -357,3 +357,7 @@ html{scroll-padding-top:125px}
     margin-inline:calc(-1 * var(--page-gutter)); padding-left:var(--page-gutter);
   }
 }
+.flow-frame .situation-detail h2,.homepage .flow-frame .situation-detail h2 { font-size:clamp(19px,2vw,23px); line-height:1.25; margin-bottom:10px; }
+.situation-detail>p { max-width:60ch; margin-bottom:12px; line-height:1.55; }
+.situation-actions { display:flex; flex-wrap:wrap; gap:10px; padding:6px; }
+.situation-actions .button { min-height:44px; padding:10px 16px; gap:8px; }

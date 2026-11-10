@@ -2,8 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, ClipboardCheck, HeartHandshake, House, MapPin, MessageCircle, Phone, Shield, TriangleAlert, Users, CircleHelp, Download} from 'lucide-react';
 
 const situations = [
-  [TriangleAlert, 'Someone is controlling or threatening me', 'It could be a sign of controlling behavior.', 'You can start by thinking about which choices you want support with.', '/plan/', 'Explore safer next steps', 'coral'],
-  [House, 'I feel unsafe at home or elsewhere', 'Find someone you can speak to.', 'Explore the available services and choose how you would like to reach them.', '/helplines/', 'Find support', 'teal'],
+  [TriangleAlert, 'Someone is controlling or threatening me', 'If someone is controlling or threatening you', 'If someone checks your messages without permission, decides who you can see, or threatens you when you disagree, it can be a sign of controlling behavior. You might find yourself changing everyday plans because you’re worried about their reaction.', 'https://nepal.unfpa.org/en/16-days-16-faces', 'Read other stories', 'coral', 'You can talk about one thing that happened, even if you’re still figuring out how you feel about it. You choose what to share.'],
+  [House, 'I feel unsafe at home or at work', 'If you feel unsafe at home or at work', 'At home, someone might block the doorway during an argument or make you afraid to say no. At work, unwanted touching, repeated comments, or threats about your shifts can leave you feeling unsafe.', '/helplines/', 'Find support', 'teal', 'If you want support now, you can choose a helpline to call. If you’d prefer a conversation later, tell us how and when it feels safe to reach you.'],
   [Users, 'I’m worried about someone else', 'Support someone you care about.', 'Explore ways to listen and share options with someone you trust.', '/support-someone/', 'Explore the guide', 'indigo'],
   [MessageCircle, 'I need someone to talk to', 'Prepare for a conversation.', 'Explore questions you can ask before speaking with a counsellor.', '/articles/first-conversation/', 'Read the guide', 'ochre'],
   [CircleHelp, 'I’m not sure what’s happening', 'You can start with a question.', 'Browse short guides about getting support, counselling and digital privacy.', '/articles/', 'Learn & recognize', 'plum'],
@@ -38,9 +38,15 @@ export function SituationNavigator({embedded=false}) {
         <button className="situation-back" onClick={()=>setChoice(null)}><ChevronLeft size={18}/>Back to situations</button>
         <h2 tabIndex={-1}>{selected[2]}</h2>
         <p>{selected[3]}</p>
+        {selected[7] && <p>{selected[7]}</p>}
         {!embedded && <img className="flow-picture" src="/art/welcome.jpg" alt=""/>}
-        <a className="flow-row" href="/articles/finding-support/"><BookOpen/>Finding support, one step at a time<ChevronRight/></a>
-        <a className="button flow-action" href={selected[4]}>{selected[5]}<ArrowRight/></a>
+        {selected[7] ? <div className="situation-actions">
+          <a className="button secondary" href={selected[4]}>{selected[5]}<ArrowRight size={16}/></a>
+          <a className="button" href="/request-support/"><MessageCircle size={16}/>Talk to someone</a>
+        </div> : <>
+          <a className="flow-row" href="/articles/finding-support/"><BookOpen/>Finding support, one step at a time<ChevronRight/></a>
+          <a className="button flow-action" href={selected[4]}>{selected[5]}<ArrowRight/></a>
+        </>}
       </div> : <div key="choices" className={lastChoice.current === null ? undefined : 'situation-return'}>
         {situations.map(([Icon,label,,,,,color],i)=><button key={label} className="flow-row" data-tone={color} onClick={()=>{lastChoice.current=i;setChoice(i)}}><Icon/>{label}<ChevronRight/></button>)}
       </div>}
