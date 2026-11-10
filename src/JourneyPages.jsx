@@ -10,10 +10,13 @@ const situations = [
 ];
 
 function JourneyFrame({title, description, children, step, back, embedded=false}) {
+  const intro = <><h1>{title}</h1><p>{description}</p></>;
   return <section className="flow-frame">
     {(!embedded || back) && <div className="flow-bar">{back ? <button onClick={back} aria-label="Back to situations"><ChevronLeft/></button> : <a href="/" aria-label="Back to home"><ChevronLeft/></a>}
       <div className="flow-dots" aria-hidden="true">{[0,1,2].map(i=><i key={i} className={i===step?'current':''}/>)}</div>
-    </div>}<h1>{title}</h1><p>{description}</p>{children}
+    </div>}
+    {embedded && !back ? <div className="situation-intro">{intro}</div> : intro}
+    {children}
   </section>;
 }
 
