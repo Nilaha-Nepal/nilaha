@@ -9,20 +9,30 @@ export function canTransition(event,link,currentURL){
  return true;
 }
 export function installPageTransitions({navigate=url=>window.location.assign(url)}={}){
- if(!window.matchMedia||window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.remove('page-arriving');return()=>{}};
+ if(!window.matchMedia||window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.remove('page-arriving','home-preloading');return()=>{}};
  const sheet=document.getElementById('page-transition'),label=sheet?.querySelector('[data-transition-label]');
  if(!sheet||!label)return()=>{};
  const content=document.querySelector('.workspace');
+ const brandItems=sheet.querySelectorAll('.preload-identity,.preload-statement,.preload-caption');
  let busy=false,failsafe;
- const reset=()=>{clearTimeout(failsafe);busy=false;gsap.killTweensOf(sheet);gsap.killTweensOf(label);if(content){gsap.killTweensOf(content);gsap.set(content,{clearProps:'transform,opacity'})}gsap.set(sheet,{yPercent:130});gsap.set(label,{opacity:0,y:0});document.documentElement.classList.remove('page-arriving');delete document.documentElement.dataset.transitionLabel;};
+ const reset=()=>{clearTimeout(failsafe);busy=false;gsap.killTweensOf(sheet);gsap.killTweensOf(label);gsap.killTweensOf(brandItems);gsap.set(brandItems,{clearProps:'transform,opacity'});if(content){gsap.killTweensOf(content);gsap.set(content,{clearProps:'transform,opacity'})}gsap.set(sheet,{yPercent:130});gsap.set(label,{opacity:0,y:0});document.documentElement.classList.remove('page-arriving','home-preloading');delete document.documentElement.dataset.transitionLabel;};
  if(document.documentElement.classList.contains('page-arriving')){
-  label.textContent=document.documentElement.dataset.transitionLabel||document.title.replace(/ — Nilaha$/, '');
-  gsap.set(sheet,{yPercent:0});gsap.set(label,{opacity:1,y:0});
-  gsap.to(label,{opacity:0,y:-12,duration:.3,delay:.45,ease:'power2.in'});
-  gsap.to(sheet,{yPercent:-130,duration:.82,delay:.45,ease:'power3.inOut',onComplete:reset});
+  gsap.set(sheet,{yPercent:0});
+  if(document.documentElement.classList.contains('home-preloading')){
+   gsap.set(label,{opacity:0});
+   gsap.fromTo(brandItems,{opacity:0,y:18},{opacity:1,y:0,duration:.55,stagger:.12,delay:.06,ease:'power2.out'});
+   gsap.to(brandItems,{opacity:0,y:-14,duration:.3,delay:1.55,ease:'power2.in'});
+   gsap.to(sheet,{yPercent:-130,duration:.88,delay:1.55,ease:'power3.inOut',onComplete:reset});
+  }else{
+   label.textContent=document.documentElement.dataset.transitionLabel||document.title.replace(/ — Nilaha$/, '');
+   gsap.set(label,{opacity:1,y:0});
+   gsap.to(label,{opacity:0,y:-12,duration:.3,delay:.45,ease:'power2.in'});
+   gsap.to(sheet,{yPercent:-130,duration:.82,delay:.45,ease:'power3.inOut',onComplete:reset});
+  }
  }
  const click=event=>{
   if(preference.matches)return;
+  if(event.target.closest?.('#skip-home-intro')){reset();return;}
   const link=event.target.closest?.('a');
   // Phone, message and quick-exit actions always cancel a pending decorative transition.
   if(event.target.closest?.('.quick-exit')||(link&&/^(tel:|sms:|mailto:)/i.test(link.getAttribute('href')||''))){reset();try{sessionStorage.removeItem(TRANSITION_KEY)}catch{}return;}

@@ -117,3 +117,15 @@ html{scroll-padding-top:125px}
 .transition-dot{width:8px;height:8px;border-radius:50%;background:#cfb4e2;flex-shrink:0}
 .quick-exit:focus-visible{position:relative;z-index:1000}
 @media(max-width:600px){#page-transition:before,#page-transition:after{height:100px}#page-transition:before{top:-50px}#page-transition:after{bottom:-50px}}
+
+/* Branded home introduction; inner pages keep their shorter title curtain. */
+.homepage-preloader{flex-direction:column;align-items:center;text-align:center;padding:30px;width:min(720px,90vw);gap:0}
+.preload-identity{display:flex;align-items:center;justify-content:center;gap:17px;margin-bottom:33px;color:#eadcf4}
+.preload-mark{width:58px;height:58px;flex-shrink:0}
+.preload-wordmark{font-family:Manrope,sans-serif;font-size:78px;line-height:1;letter-spacing:-4px;font-weight:800;color:#fffaf4}
+.preload-wordmark>span{color:#e6c885}
+.preload-statement{font-family:Manrope,sans-serif;font-size:26px;line-height:1.6;letter-spacing:-.6px;font-weight:400;color:#ece2f2;margin:0 0 31px}
+.preload-caption{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;line-height:1.9;letter-spacing:2px;text-transform:uppercase;color:#af9fba}
+#skip-home-intro{position:fixed;z-index:901;right:32px;bottom:27px;padding:10px 15px;align-items:center;border:1px solid #ffffff30;border-radius:6px;background:#ffffff08;color:#d9cce1;font-size:11px;letter-spacing:.3px;cursor:pointer}
+#skip-home-intro:hover{background:#ffffff15;color:white}
+@media(max-width:600px){.homepage-preloader{padding:22px;width:94vw}.preload-identity{gap:12px;margin-bottom:28px}.preload-mark{width:42px;height:42px}.preload-wordmark{font-size:59px;letter-spacing:-3px}.preload-statement{font-size:21px;letter-spacing:-.4px;line-height:1.6;margin-bottom:25px}.preload-caption{font-size:8px;letter-spacing:1.5px;max-width:260px}#skip-home-intro{right:20px;bottom:22px}}

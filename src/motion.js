@@ -12,7 +12,7 @@ export function usePageMotion(route){
    media=gsap.matchMedia();
    media.add('(prefers-reduced-motion: no-preference)',()=>{
     context=gsap.context(()=>{
-     const arrivalDelay=document.documentElement.classList.contains('page-arriving') ? .65 : 0;
+     const arrivalDelay=document.documentElement.classList.contains('home-preloading') ? 1.8 : document.documentElement.classList.contains('page-arriving') ? .65 : 0;
      const intro=document.querySelector('.hub-heading, .page-intro .container');
      if(intro)gsap.fromTo([...intro.children],{y:18,opacity:0},{y:0,opacity:1,duration:.7,delay:arrivalDelay,stagger:.075,ease:'power2.out',clearProps:'transform,opacity'});
      const picture=document.querySelector('.hero-visual');

@@ -82,3 +82,7 @@ The public homepage is a service hub rather than a promotional landing page: dir
 ### Page transitions
 
 Internal page links use a short curved charcoal curtain, with the destination title and a slight outgoing-page lift. The next page starts covered via a short-lived sessionStorage marker and reveals its pre-rendered content. This remains normal multi-page document navigation. The marker contains only a public destination path, label and timestamp; no form or contact data is retained. A bounded fallback releases the curtain if the new page script fails. Phone/SMS/email links, quick exit, new-tab clicks, same-page anchors, the calculator, and reduced-motion preferences bypass the decorative delay. Browser Back/forward cache restoration resets the curtain.
+
+### Homepage introduction
+
+Direct visits and returns to `/` display the Nilaha mark, wordmark and statement “Your voice matters. Your next step is yours.” before the curved curtain reveals the support hub. The full introduction takes about 2.4 seconds and includes a visible Skip intro button. Reduced-motion preferences bypass it, and the homepage is visible without JavaScript. Other routes keep the shorter destination-title transition. No visit tracking or personal information is stored for the intro.
