@@ -64,7 +64,7 @@ export function SituationNavigator({embedded=false}) {
   return <JourneyFrame embedded={embedded} title="What would you like help with today?" description="Choose the option that feels closest to your situation. You can explore anonymously." step={selected ? 1 : 0}>
     <div className="situation-panel" ref={panel}>
       {selected ? <div key="detail" className="situation-detail">
-        <button className="situation-back" onClick={()=>setChoice(null)}>Back to situations<ChevronLeft size={18} aria-hidden="true"/></button>
+        <button className="situation-back" onClick={()=>setChoice(null)}><ChevronLeft size={18} aria-hidden="true"/>Back to situations</button>
         <h2 tabIndex={-1}>{selected.title}</h2>
         {selected.paragraphs.map(text=><p key={text}>{text}</p>)}
         {!embedded && <img className="flow-picture" src="/art/welcome.jpg" alt=""/>}
