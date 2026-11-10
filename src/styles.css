@@ -295,6 +295,9 @@ html{scroll-padding-top:125px}
 .situation-panel { overflow-x:clip; }
 .situation-detail h2 { font-size:clamp(23px,3vw,32px); }
 .situation-back { display:inline-flex; align-items:center; gap:6px; min-height:44px; margin:5px 0 10px; padding:0; border:0; background:transparent; color:var(--purple); }
+.situation-back > svg { flex:none; padding:3px; background:var(--purple); border-radius:50%; color:white; }
+.situation-back:is(:hover,:focus-visible) > svg { background:#843f76; }
+.situation-back:is(:hover,:focus-visible) > span { text-decoration:underline; text-underline-offset:3px; }
 @media(prefers-reduced-motion:no-preference) {
   .situation-detail { animation:situation-forward .32s ease-out both; }
   .situation-return { animation:situation-backward .26s ease-out both; }
