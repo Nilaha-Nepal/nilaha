@@ -301,3 +301,12 @@ html{scroll-padding-top:125px}
   @keyframes situation-forward { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
   @keyframes situation-backward { from { transform:translateX(-100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
 }
+
+.homepage .home-contact {
+  display:grid;
+  gap:20px;
+  max-width:760px;
+  margin-block:clamp(24px,4vw,48px);
+}
+.home-contact .request-panel,.home-contact .hub-panel { min-width:0; border-radius:18px; }
+.homepage .guidance-panel { margin-bottom:30px; }
