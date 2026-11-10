@@ -59,9 +59,9 @@ function Home({articles,helplines}){const [query,setQuery]=useState('');const sh
   <div className="welcome-copy"><p className="eyebrow">A SAFER WAY TO FIND SUPPORT</p>
     <h1><span className="desktop-title">You don’t have to know what to ask for to find help.</span><span className="phone-title">When something feels wrong, knowing where to turn matters.</span></h1>
     <p>Understand your situation, explore your options, and connect with support. At your own pace.</p>
-    <a className="button" href="/understand/">Explore your options <ArrowRight size={17}/></a> <a className="button secondary see-how" href="#features"><CirclePlay size={18}/>See how it works</a>
+    <a className="button secondary see-how" href="#features"><CirclePlay size={18}/>See how it works</a>
   </div>
-</section><JourneyChoices/><section className="features" id="features"><h2>Key features at a glance</h2><div className="feature-grid">{[
+</section><SituationNavigator embedded/><JourneyChoices/><section className="features" id="features"><h2>Key features at a glance</h2><div className="feature-grid">{[
   [Compass,'Situation Navigator','Get guidance based on what you’re facing.','/understand'],
   [ShieldPlus,'Safety Planner','Create a personal safety plan.','/plan'],
   [Users,'Support Network','Find services and organizations in Nepal.','/helplines'],

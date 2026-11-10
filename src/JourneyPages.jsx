@@ -9,25 +9,26 @@ const situations = [
   [CircleHelp, 'I’m not sure what’s happening', 'You can start with a question.', 'Browse short guides about getting support, counselling and digital privacy.', '/articles/', 'Learn & recognize'],
 ];
 
-function JourneyFrame({title, description, children, step, back}) {
+function JourneyFrame({title, description, children, step, back, embedded=false}) {
+  const Heading = embedded ? "h2" : "h1";
   return <section className="flow-frame">
-    <div className="flow-bar">{back ? <button onClick={back} aria-label="Back to situations"><ChevronLeft/></button> : <a href="/" aria-label="Back to home"><ChevronLeft/></a>}
+    {(!embedded || back) && <div className="flow-bar">{back ? <button onClick={back} aria-label="Back to situations"><ChevronLeft/></button> : <a href="/" aria-label="Back to home"><ChevronLeft/></a>}
       <div className="flow-dots" aria-hidden="true">{[0,1,2].map(i=><i key={i} className={i===step?'current':''}/>)}</div>
-    </div><h1>{title}</h1><p>{description}</p>{children}
+    </div>}<Heading>{title}</Heading><p>{description}</p>{children}
   </section>;
 }
 
-export function SituationNavigator() {
+export function SituationNavigator({embedded=false}) {
   const [choice,setChoice]=useState(null);
   if(choice!==null) {
     const [, ,title,description,url,action]=situations[choice];
-    return <JourneyFrame title={title} description={description} step={1} back={()=>setChoice(null)}>
+    return <JourneyFrame embedded={embedded} title={title} description={description} step={1} back={()=>setChoice(null)}>
       <img className="flow-picture" src="/art/welcome.jpg" alt=""/>
       <a className="flow-row" href="/articles/finding-support/"><BookOpen/>Finding support, one step at a time<ChevronRight/></a>
       <a className="button flow-action" href={url}>{action}<ArrowRight/></a>
     </JourneyFrame>;
   }
-  return <JourneyFrame title="What would you like help with today?" description="Choose the option that feels closest to your situation. You can explore anonymously." step={0}>
+  return <JourneyFrame embedded={embedded} title="What would you like help with today?" description="Choose the option that feels closest to your situation. You can explore anonymously." step={0}>
     {situations.map(([Icon,label],i)=><button key={label} className="flow-row" onClick={()=>setChoice(i)}><Icon/>{label}<ChevronRight/></button>)}
   </JourneyFrame>;
 }

@@ -257,3 +257,11 @@ html{scroll-padding-top:125px}
 @media(min-width:701px) {
   .welcome { background-image:linear-gradient(90deg,#fff6f3f5 0%,#fff6f3d9 34%,#fff6f300 68%),url('/art/welcome.jpg'); background-position:right center; }
 }
+.homepage .welcome { padding-bottom:clamp(28px,4vw,60px); }
+.homepage .see-how { margin-left:0; }
+.homepage .flow-frame { max-width:850px; margin:clamp(20px,3vw,40px) auto; }
+.homepage .flow-frame h2 { font-size:clamp(26px,3vw,39px); font-weight:800; }
+.homepage .journey-choices { margin-top:0; }
+@media(max-width:700px) {
+  .homepage .flow-frame { padding:20px 0; }
+}
